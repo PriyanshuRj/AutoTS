@@ -835,7 +835,7 @@ class auto_timeseries:
         print(f"Total time taken: {elapsed:.0f} seconds.")
         print("-"*50 + "\n\n")
         print("Leaderboard with best model on top of list:\n",self.get_leaderboard())
-        return self
+        return self.get_leaderboard(), best_model_name
 
     def get_best_model_name(self) -> str:
         """

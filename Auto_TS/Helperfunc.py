@@ -42,11 +42,12 @@ def GetModel(period, score, model, interval, tcColumn, target,train_df):
   train_df.reset_index(inplace=True)
   
   # fitting the model i.e genrating weights regarding the model
-  model.fit(traindata= train_df, 
+  leaderboard, best_name = model.fit(traindata= train_df, 
             ts_column=tcColumn,
             target=target,
             cv=5)
-  return model
+  
+  return model,leaderboard, best_name
 
 # Creating a prediction pipeline
 def predictionpipeline(model,test_df,name):
@@ -63,7 +64,7 @@ if __name__=="__main__":
     test_df = parse(test_file)
     print(test_df.head())
     setIndex("dteday",train_df,test_df)
-    model = GetModel(61,'rmse','best','D','dteday', 'cnt',train_df)
-    print("Hereee \n\n\n\n\n\n\n\n\n\n\n")
+    model,leaderboard, best_name = GetModel(61,'rmse','best','D','dteday', 'cnt',train_df)
+    print(leaderboard,"\n\n",best_name)
     predictionpipeline(model,test_df, "Prophet Predictions")
     print(test_df.head())
